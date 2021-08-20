@@ -9,6 +9,9 @@ import {
   Typography,
   Badge,
   notification,
+  Space,
+  Col,
+  Row
 } from "antd";
 import { SmileTwoTone, LikeTwoTone, CheckCircleTwoTone, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Address } from "../components";
@@ -38,23 +41,23 @@ export default function QuadraticDiplomacyCreate({ tx, writeContracts }) {
   };
 
   return (
-    <div style={{ border: "1px solid #cccccc", padding: 16, width: 800, margin: "auto", marginTop: 64 }}>
-      <Title level={3}>Add members</Title>
+    <div class="custom-wrapper">
+      <Title level={3} style={{ fontFamily: "Space Mono" }}>Add members</Title>
       <Divider />
-      <Form form={form} name="basic" onFinish={handleSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 12 }}>
-        <Form.Item label="Vote allocation" name="voteCredit" style={{ textAlign: "left" }}>
+      <Form form={form} name="basic" onFinish={handleSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 24 }} layout="vertical">
+        <Form.Item label="Vote Allocation" name="voteCredit" style={{ textAlign: "left" }}>
+          <Col span = {8}>
           <Input
             type="number"
-            placeholder="Voter allocation"
-            style={{ width: "50%" }}
+            placeholder="Voter Allocation"
             onChange={event => setVoteAllocation(event.target.value)}
           />
+          </Col>
         </Form.Item>
         <Divider />
         {voters.map((_, index) => (
           <VoterInput key={index} index={index} setVoters={setVoters} />
         ))}
-        <Divider />
         <Form.Item style={{ justifyContent: "center" }}>
           <Button
             type="dashed"
@@ -65,7 +68,8 @@ export default function QuadraticDiplomacyCreate({ tx, writeContracts }) {
             Add Voter
           </Button>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+        <Divider />
+        <Form.Item wrapperCol={{ offset: 16, span: 8 }}>
           <Button type="primary" htmlType="submit" block>
             Submit
           </Button>
@@ -78,10 +82,12 @@ export default function QuadraticDiplomacyCreate({ tx, writeContracts }) {
 const VoterInput = ({ index, setVoters }) => {
   return (
     <>
-      <Form.Item label="Name" name={`name[${index}]`} style={{ textAlign: "left", marginBottom: "5px" }}>
+      <Form.Item label="Voter" name={`name[${index}]`} style={{ textAlign: "left"}}>
+        <Input.Group size="large">
+        <Row gutter={8}>
+        <Col span={8}>
         <Input
-          placeholder="Voter name"
-          style={{ width: "50%" }}
+          placeholder="Name"
           onChange={event =>
             setVoters(prevVoters => {
               const nextVoters = [...prevVoters];
@@ -90,10 +96,10 @@ const VoterInput = ({ index, setVoters }) => {
             })
           }
         />
-      </Form.Item>
-      <Form.Item label="Address" name={`address[${index}]`}>
+        </Col>
+        <Col span={16}>
         <Input
-          placeholder="Voter address"
+          placeholder="Address"
           onChange={event =>
             setVoters(prevVoters => {
               const nextVoters = [...prevVoters];
@@ -102,6 +108,9 @@ const VoterInput = ({ index, setVoters }) => {
             })
           }
         />
+        </Col>
+        </Row>
+        </Input.Group>
       </Form.Item>
     </>
   );

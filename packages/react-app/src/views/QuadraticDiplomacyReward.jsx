@@ -45,7 +45,7 @@ export default function QuadraticDiplomacyReward({ userSigner, votesEntries, pri
 
   if (!isAdmin) {
     return (
-      <div style={{ border: "1px solid #cccccc", padding: 16, width: 800, margin: "auto", marginTop: 64 }}>
+      <div class="custom-wrapper">
         <Title level={4}>Access denied</Title>
         <p>Only admins can send rewards.</p>
       </div>
@@ -89,8 +89,8 @@ export default function QuadraticDiplomacyReward({ userSigner, votesEntries, pri
   };
 
   return (
-    <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
-      <Title level={3}>Reward Contributors</Title>
+    <div class="custom-wrapper">
+      <Title level={3} style={{ fontFamily: "Space Mono" }}>Reward Contributors</Title>
       <Title level={5}>
         Total sqrt votes:&nbsp;&nbsp;
         <Badge

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Button, Checkbox, Divider, Space, List, Steps, Typography, Badge } from "antd";
+import { Button, Checkbox, Divider, Space, List, Steps, Typography, Badge, Row, Col } from "antd";
 import { SmileTwoTone, LikeTwoTone, CheckCircleTwoTone, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Address } from "../components";
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries, tx, writeContracts, isVoter }) {
   const [selectedContributors, setSelectedContributors] = useState({});
@@ -27,9 +27,9 @@ export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries
 
   if (!isVoter) {
     return (
-      <div style={{ border: "1px solid #cccccc", padding: 16, width: 800, margin: "auto", marginTop: 64 }}>
+      <div class="custom-wrapper">
         <Title level={4}>Access denied</Title>
-        <p>You are not part of the members of this election.</p>
+        <Paragraph>You are not part of the members of this election.</Paragraph>
       </div>
     );
   }
@@ -89,8 +89,8 @@ export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries
   };
 
   return (
-    <div style={{ border: "1px solid #cccccc", padding: 16, width: 800, margin: "auto", marginTop: 64 }}>
-      <Steps initial={1} current={currentStep} labelPlacement="vertical">
+    <div class="custom-wrapper">
+      {/*<Steps initial={1} current={currentStep} labelPlacement="vertical">
         <Steps.Step
           title="Select Contributors"
           subTitle={`${contributorEntries.length} contributors`}
@@ -103,20 +103,24 @@ export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries
         />
         <Steps.Step title="Done" subTitle="Thank you!" icon={<CheckCircleTwoTone twoToneColor="#52c41a" />} />
       </Steps>
-      <Divider />
+      <Divider />*/}
       {currentStep === 1 ? (
         <List
-          size="small"
+          size="large"
           itemLayout="horizontal"
-          header={<Title level={4}>1. Who've you been working with?</Title>}
+          header={<Title level={3} style={{ fontFamily: "Space Mono" }}>1. Who have you been working with?</Title>}
           footer={
-            <Button
-              type="primary"
-              onClick={() => setCurrentStep(2)}
-              disabled={!Object.keys(selectedContributors).length}
-            >
-              Next
-            </Button>
+            <Row>
+              <Col span={8}>
+              <Button
+                type="primary"
+                onClick={() => setCurrentStep(2)}
+                disabled={!Object.keys(selectedContributors).length}
+              >
+                Next
+              </Button>
+              </Col>
+            </Row>
           }
           dataSource={Object.entries(contributors)}
           renderItem={([contributorAddress, contributor], index) => (
@@ -151,8 +155,8 @@ export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries
           itemLayout="horizontal"
           header={
             <Space direction="vertical">
-              <Title level={4}>2. Allocate votes</Title>
-              <Title level={5}>
+              <Title level={3} style={{ fontFamily: "Space Mono" }}>2. Allocate votes</Title>
+              <Paragraph>
                 Remaining vote tokens:&nbsp;&nbsp;
                 <Badge
                   showZero
@@ -160,7 +164,7 @@ export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries
                   count={remainingVoteTokens}
                   style={{ backgroundColor: "#52c41a" }}
                 />
-              </Title>
+              </Paragraph>
             </Space>
           }
           footer={
@@ -219,10 +223,8 @@ export default function QuadraticDiplomacyVote({ voteCredits, contributorEntries
       ) : (
         currentStep === 3 && (
           <>
-            <h4>
-              <strong>Thank you for voting.</strong>
-            </h4>
-            <p>The allocation to this workstream will be informed by your votes. See you next month!</p>
+            <Title level={3}>Thank you for voting!</Title> 
+            <Paragraph>The allocation to this workstream will be informed by your votes. See you next month!</Paragraph>
           </>
         )
       )}
